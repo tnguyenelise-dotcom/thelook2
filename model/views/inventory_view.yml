@@ -1,0 +1,15 @@
+views:
+  - name: inventory_view
+    description: Inventory valuation and sell-through by product, category and distribution center.
+
+    cubes:
+      - join_path: inventory_items
+        includes: "*"
+
+      - join_path: inventory_items.products
+        prefix: true
+        includes: "*"
+
+      - join_path: inventory_items.products.distribution_centers
+        prefix: true
+        includes: "*"

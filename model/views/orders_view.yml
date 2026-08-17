@@ -1,0 +1,11 @@
+views:
+  - name: orders_view
+    description: Order-level KPIs (order counts, items per order, returns) with customer attributes.
+
+    cubes:
+      - join_path: orders
+        includes: "*"
+
+      - join_path: orders.users
+        prefix: true
+        includes: "*"

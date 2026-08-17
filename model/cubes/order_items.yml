@@ -1,0 +1,103 @@
+cubes:
+  - name: order_items
+    sql_table: public.order_items
+    public: false
+    description: Individual line items within an order (one row per product purchased).
+
+    joins:
+      - name: orders
+        sql: "{CUBE}.order_id = {orders}.order_id"
+        relationship: many_to_one
+
+      - name: inventory_items
+        sql: "{CUBE}.inventory_item_id = {inventory_items}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: order_id
+        sql: order_id
+        type: number
+
+      - name: user_id
+        sql: user_id
+        type: number
+
+      - name: product_id
+        sql: product_id
+        type: number
+
+      - name: inventory_item_id
+        sql: inventory_item_id
+        type: number
+
+      - name: status
+        sql: status
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+      - name: shipped_at
+        sql: "CAST({CUBE}.shipped_at AS TIMESTAMP)"
+        type: time
+
+      - name: delivered_at
+        sql: "CAST({CUBE}.delivered_at AS TIMESTAMP)"
+        type: time
+
+      - name: returned_at
+        sql: "CAST({CUBE}.returned_at AS TIMESTAMP)"
+        type: time
+
+      - name: sale_price
+        sql: "CAST({CUBE}.sale_price AS DOUBLE PRECISION)"
+        type: number
+
+    measures:
+      - name: count
+        type: count
+        drill_members:
+          - id
+          - order_id
+          - status
+          - created_at
+          - sale_price
+
+      - name: revenue
+        sql: "{sale_price}"
+        type: sum
+        format: currency
+        drill_members:
+          - id
+          - order_id
+          - status
+          - sale_price
+          - created_at
+
+      - name: avg_sale_price
+        sql: "{sale_price}"
+        type: avg
+        format: currency
+
+      - name: returned_revenue
+        sql: "{sale_price}"
+        type: sum
+        format: currency
+        filters:
+          - sql: "{CUBE}.status = 'Returned'"
+
+      - name: returned_count
+        type: count
+        filters:
+          - sql: "{CUBE}.status = 'Returned'"
+        drill_members:
+          - id
+          - order_id
+          - status
+          - created_at

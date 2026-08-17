@@ -1,0 +1,39 @@
+views:
+  - name: sales_view
+    description: Line-item level sales - revenue, returns, product, region and customer attributes.
+
+    cubes:
+      - join_path: order_items
+        includes: "*"
+
+      - join_path: order_items.orders
+        prefix: true
+        includes:
+          - status
+          - created_at
+          - num_of_item
+
+      - join_path: order_items.orders.users
+        prefix: true
+        includes: "*"
+
+      - join_path: order_items.inventory_items
+        prefix: true
+        includes:
+          - product_category
+          - product_name
+          - product_brand
+          - product_department
+          - product_retail_price
+          - cost
+          - total_inventory_cost
+
+      - join_path: order_items.inventory_items.products
+        prefix: true
+        includes:
+          - distribution_center_id
+
+      - join_path: order_items.inventory_items.products.distribution_centers
+        prefix: true
+        includes:
+          - name

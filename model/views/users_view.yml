@@ -1,0 +1,7 @@
+views:
+  - name: users_view
+    description: Customer base - signups, demographics and geography.
+
+    cubes:
+      - join_path: users
+        includes: "*"

@@ -1,0 +1,68 @@
+cubes:
+  - name: products
+    sql_table: public.products
+    public: false
+    description: Product catalog.
+
+    joins:
+      - name: distribution_centers
+        sql: "{CUBE}.distribution_center_id = {distribution_centers}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: brand
+        sql: brand
+        type: string
+
+      - name: category
+        sql: category
+        type: string
+
+      - name: department
+        sql: department
+        type: string
+
+      - name: sku
+        sql: sku
+        type: string
+
+      - name: distribution_center_id
+        sql: distribution_center_id
+        type: number
+
+      - name: cost
+        sql: cost
+        type: number
+
+      - name: retail_price
+        sql: retail_price
+        type: number
+
+    measures:
+      - name: count
+        type: count
+        drill_members:
+          - id
+          - name
+          - brand
+          - category
+          - department
+
+      - name: avg_cost
+        sql: cost
+        type: avg
+        format: currency
+
+      - name: avg_retail_price
+        sql: retail_price
+        type: avg
+        format: currency

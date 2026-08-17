@@ -1,0 +1,82 @@
+cubes:
+  - name: users
+    sql_table: public.users
+    public: false
+    description: Customers of the store.
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: full_name
+        sql: "{CUBE}.first_name || ' ' || {CUBE}.last_name"
+        type: string
+
+      - name: first_name
+        sql: first_name
+        type: string
+
+      - name: last_name
+        sql: last_name
+        type: string
+
+      - name: email
+        sql: email
+        type: string
+
+      - name: age
+        sql: age
+        type: number
+
+      - name: gender
+        sql: gender
+        type: string
+
+      - name: state
+        sql: state
+        type: string
+
+      - name: city
+        sql: city
+        type: string
+
+      - name: country
+        sql: country
+        type: string
+
+      - name: street_address
+        sql: street_address
+        type: string
+
+      - name: postal_code
+        sql: postal_code
+        type: string
+
+      - name: latitude
+        sql: latitude
+        type: number
+
+      - name: longitude
+        sql: longitude
+        type: number
+
+      - name: traffic_source
+        sql: traffic_source
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        drill_members:
+          - id
+          - full_name
+          - city
+          - state
+          - country
+          - created_at

@@ -1,0 +1,30 @@
+cubes:
+  - name: distribution_centers
+    sql_table: public.distribution_centers
+    public: false
+    description: Warehouses that store and ship inventory.
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: latitude
+        sql: latitude
+        type: number
+
+      - name: longitude
+        sql: longitude
+        type: number
+
+    measures:
+      - name: count
+        type: count
+        drill_members:
+          - id
+          - name
