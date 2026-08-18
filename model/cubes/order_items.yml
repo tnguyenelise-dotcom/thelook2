@@ -92,10 +92,23 @@ cubes:
         filters:
           - sql: "{CUBE}.status = 'Returned'"
 
-      - name: returned_count
+      - name: returned_item_count
+        title: Returned Item Count
         type: count
         filters:
           - sql: "{CUBE}.status = 'Returned'"
+        drill_members:
+          - id
+          - order_id
+          - status
+          - created_at
+
+      - name: net_items
+        title: "Net Items"
+        description: "All items minus cancelled and returned items."
+        type: count
+        filters:
+          - sql: "{CUBE}.status NOT IN ('Cancelled', 'Returned')"
         drill_members:
           - id
           - order_id

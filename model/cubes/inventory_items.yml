@@ -78,8 +78,13 @@ cubes:
           - sql: "{CUBE}.sold_at IS NOT NULL"
         drill_members:
           - id
+          - product_id
           - product_name
-          - sold_at
+          - product_brand
+          - product_category
+          - product_department
+          - product_distribution_center_id
+          - sold_count
 
       - name: total_inventory_cost
         sql: cost
@@ -87,5 +92,10 @@ cubes:
         format: currency
         drill_members:
           - id
+          - product_id
           - product_name
+          - product_brand
+          - product_category
+          - product_department
+          - product_distribution_center_id
           - cost
