@@ -10,7 +10,7 @@ cubes:
         relationship: many_to_one
 
       - name: products
-        sql: "{CUBE}.inventory_item_id = {inventory_items}.id"
+        sql: "{CUBE}.inventory_item_id = {products}.id"
         relationship: many_to_one
 
     dimensions:
