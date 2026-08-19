@@ -9,7 +9,7 @@ cubes:
         sql: "{CUBE}.order_id = {orders}.order_id"
         relationship: many_to_one
 
-      - name: inventory_items
+      - name: products
         sql: "{CUBE}.inventory_item_id = {inventory_items}.id"
         relationship: many_to_one
 
